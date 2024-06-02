@@ -2,7 +2,6 @@ import styled from "styled-components";
 import LogoRef from "../../images/LogoMinsapay.svg";
 import LogOutRef from "../../images/LogOut.svg";
 import GoHomeRef from "../../images/CPUHome.svg";
-import ToSellerRef from "../../images/ToSeller.svg";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../features/login-feature";
 
@@ -36,15 +35,6 @@ const LogOutIcon = styled.img`
     cursor: pointer;
   }
 `;
-const ToSellerIcon = styled.img`
-  height: 80%;
-  /* margin-right: 11px; */
-  aspect-ratio: 1;
-  /* margin-left: auto; */
-  &:hover {
-    cursor: pointer;
-  }
-`;
 
 export function BuyerHeader({ balance }) {
   const navigate = useNavigate();
@@ -59,9 +49,6 @@ export function BuyerHeader({ balance }) {
     if (!confirm("로그아웃 하시겠습니까?")) return;
     await auth.signOut();
     navigate("../../");
-  };
-  const onToSellerIconClick = () => {
-    navigate("../seller-home");
   };
   const onLogoHover = (e) => {
     const logoImage = e.target;
@@ -81,10 +68,6 @@ export function BuyerHeader({ balance }) {
         src={LogoRef}
       />
       <Balance>{balance}원</Balance>
-      <ToSellerIcon
-        onClick={onToSellerIconClick}
-        src={ToSellerRef}
-      ></ToSellerIcon>
       <LogOutIcon onClick={onLogOutIconClick} src={LogOutRef} />
     </HeaderDiv>
   );

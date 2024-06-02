@@ -43,6 +43,9 @@ const TopDiv = styled.div`
   font-family: "BMDOHYEON";
   gap: 4%;
   margin: 4vh auto 5vh;
+  @media only screen and (max-width: 2000px) {
+    font-size: calc(0.05vw + 1.1em);
+  }
   // font size change needed
 `;
 const Title = styled.div`
@@ -60,7 +63,7 @@ const OpacityLayer = styled.div`
   height: 100%;
   border-radius: 17px;
   font-family: "BMDOHYEON";
-  font-size: 2em;
+  font-size: 2.5em;
   color: white;
   flex-direction: row;
   display: flex;
@@ -128,7 +131,7 @@ const Btn = styled.button`
   @media only screen and (max-width: 768px) {
     height: 100%;
   }
-  font-size: 2em;
+  font-size: 1.7em;
   &:hover {
     cursor: pointer;
     opacity: 0.8;
@@ -171,8 +174,12 @@ export default function CPUHome() {
       );
       unsubscribe = onSnapshot(CPUFirebase.userDocRef, (doc) => {
         // 나중에 features로 이관할 방법을 찾을 것임
+        console.log("change in cpu");
         CPUFirebase.userDoc = doc;
         CPUFirebase.userDocData = doc.data();
+        CPUFirebase.orderHistory = JSON.parse(
+          CPUFirebase.userDocData.order_history,
+        );
         setBalance(CPUFirebase.userDocData.balance);
         setKioskImage(CPUFirebase.kioskImageDownloadUrl);
         setOrderList(

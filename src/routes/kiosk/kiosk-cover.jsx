@@ -1,36 +1,50 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { kioskFirebase } from "../../features/kiosk-firebase-interaction";
+import { CPUFirebase } from "../../features/CPU-firebase-interaction";
 import { onSnapshot } from "firebase/firestore";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  height: 100vh; // 전체 화면 높이 설정
+  width: 100vw;
+`;
+const KioskImage = styled.img`
+  width: 100%;
+  height: 100%;
+`;
 
 export default function KioskCover() {
   // 지금 꺼 전체적으로 수정
+  const navigate = useNavigate();
+  const [kioskImageDownloadUrl, setKioskImageDownloadUrl] = useState("");
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
-      await kioskFirebase.init();
+      await CPUFirebase.init();
+      await CPUFirebase.kioskImageInit();
+      setKioskImageDownloadUrl(CPUFirebase.kioskImageDownloadUrl);
+      if (CPUFirebase.userDocData.linked_buyer !== "")
+        navigate("../kiosk-home");
     };
     init();
-    unsubscribe = onSnapshot(kioskFirebase.userDocRef, (doc) => {
-      kioskFirebase.userDocData = doc.data();
-      if (kioskFirebase.userDocData.linked_buyer !== "")
+    unsubscribe = onSnapshot(CPUFirebase.userDocRef, async (doc) => {
+      CPUFirebase.userDocData = doc.data();
+      await CPUFirebase.kioskImageInit();
+      setKioskImageDownloadUrl(CPUFirebase.kioskImageDownloadUrl);
+      if (CPUFirebase.userDocData.linked_buyer !== "")
         navigate("../kiosk-home");
     });
     return () => {
       unsubscribe && unsubscribe();
     };
   }, []);
-  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("../kiosk-home/kiosk-authentication");
+  };
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-      <div>kiosk cover</div>
-      <button
-        onClick={() => {
-          navigate("../kiosk-home/kiosk-authentication");
-        }}
-      >
-        계속하기 {">>"}
-      </button>
-    </div>
+    <Wrapper>
+      <KioskImage src={kioskImageDownloadUrl} onClick={handleClick} />
+    </Wrapper>
   );
 }

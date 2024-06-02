@@ -24,7 +24,6 @@ export default function BuyerPayment() {
   };
   const onKioskAuthenticationNumberSumbit = async (e) => {
     e.preventDefault();
-    console.log(e.target[0].value);
     const success = await buyerFirebase.submitKioskAuthenticationNumber(
       e.target[0].value,
     ); // 값 대조
@@ -54,6 +53,8 @@ export default function BuyerPayment() {
           type="text"
           id="priceState"
         />
+        <br />
+        <button type="submit">Submit</button>
       </form>
 
       <button onClick={() => navigate("../buyer-home")}>To Buyer Home</button>

@@ -6,14 +6,11 @@ import {
   ProtectedBuyer,
   ProtectedCPU,
   ProtectedKiosk,
-  ProtectedKioskHome,
-  ProtectedSeller,
   ProtectedRoute,
 } from "./components/protected-routes";
 import { BACKGROUND_GRAY } from "./components/theme-definition";
 import BuyerHome from "./routes/buyer/buyer-home";
 import BuyerPayment from "./routes/buyer/buyer-payment";
-import SellerHome from "./routes/seller/seller-home";
 import CPUHome from "./routes/CPU/cpu-home";
 import ChangeMenu from "./routes/CPU/change-menu";
 import RefundApproval from "./routes/CPU/refund-approval";
@@ -45,14 +42,6 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "seller-home",
-    element: (
-      <ProtectedSeller>
-        <SellerHome />
-      </ProtectedSeller>
-    ),
-  },
-  {
     path: "cpu-home", // CPU 홈화면이다.
     element: (
       <ProtectedCPU>
@@ -79,11 +68,9 @@ const router = createBrowserRouter([
   {
     path: "/kiosk-home", // kiosk 홈화면
     element: (
-      <ProtectedKioskHome>
-        <ProtectedKiosk>
-          <KioskHome />
-        </ProtectedKiosk>
-      </ProtectedKioskHome>
+      <ProtectedKiosk>
+        <KioskHome />
+      </ProtectedKiosk>
     ),
   },
   {
@@ -125,6 +112,12 @@ const GlobalStyles = createGlobalStyle`
       font-style: normal;
     }
 		font-family: "BMDOHYEON"; // 폰트 정의
+    @font-face {
+    font-family: 'SOGANGUNIVERSITYTTF';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/SOGANGUNIVERSITYTTF.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    }
   }
 `;
 

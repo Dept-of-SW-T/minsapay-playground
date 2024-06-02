@@ -3,10 +3,10 @@ import { kioskFirebase } from "../../features/kiosk-firebase-interaction";
 import { useNavigate } from "react-router-dom";
 import { onSnapshot } from "firebase/firestore";
 
-export default function KioskAuthentiaction() {
-  // only one kiosk per team allowed yet
+export default function KioskAuthentication() {
   const navigate = useNavigate();
   const [kioskAuthenticationNumber, setKioskAuthenticationNumber] = useState();
+
   useEffect(() => {
     let unsubscribe = null;
     const init = async () => {
@@ -31,13 +31,24 @@ export default function KioskAuthentiaction() {
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
+        justifyContent: "center",
         alignItems: "center",
+        height: "100vh",
+        width: "100vw",
+        background: "radial-gradient(circle, #2b81ea, #06195e)", // 파란색 그라데이션- 색 수정 필요
+        flexDirection: "column",
         gap: "10px",
       }}
     >
-      <p>kiosk authentication</p>
-      {kioskAuthenticationNumber}
+      <div
+        style={{
+          fontSize: "6.0vw",
+          color: "white", // 글씨 색상
+          fontFamily: "Century Gothic",
+        }}
+      >
+        {kioskAuthenticationNumber}
+      </div>
     </div>
   );
 }
